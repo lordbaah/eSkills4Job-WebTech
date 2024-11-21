@@ -2,9 +2,11 @@
 
 const express = require("express");
 
+// accssing routes from studentsRoutes.js
+const studentsRoutes = require("./routes/studentsRoutes");
+
 const server = express();
 
-let name = "Lord";
 let port = 8000;
 
 // const server = http.createServer((request, response) => {
@@ -22,37 +24,11 @@ let port = 8000;
 //   );
 // });
 
-let students = [
-  { id: 1, name: "john doe1", dob: "200-1-10", email: "john1@gmail.com" },
-  { id: 2, name: "john doe2", dob: "200-2-10", email: "john2@gmail.com" },
-  { id: 3, name: "john doe3", dob: "200-3-10", email: "john3@gmail.com" },
-  { id: 4, name: "john doe4", dob: "200-4-10", email: "john4@gmail.com" },
-];
+// body parser middleware
+server.use(express.json());
+server.use(express.urlencoded({ extended: false }));
 
-// all students
-server.get("/api/students", (request, response) => {
-  response.json(students);
-});
-
-// get student by id
-server.get("/api/student/:id", (request, response) => {
-  // response.json(students);
-  // const studentId = request.params.id;
-  const studentId = Number(request.params.id);
-
-  // console.log(studentId);
-
-  const student = students.find((student) => student.id === studentId);
-  const checkIndex = students.findIndex((student) => student.id === studentId);
-
-  if (!student) {
-    response.json({ message: `student with id ${studentId} does not exist` });
-  } else {
-    response.json(student);
-    console.log(checkIndex);
-  }
-  // response.json(student);
-});
+server.use("/api/v1", studentsRoutes);
 
 server.listen(port, () => {
   console.log(`Server is listening on port ${port}`);
