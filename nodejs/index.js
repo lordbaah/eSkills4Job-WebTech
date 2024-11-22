@@ -4,25 +4,37 @@ const express = require("express");
 
 // accssing routes from studentsRoutes.js
 const studentsRoutes = require("./routes/studentsRoutes");
+const db = require("./database");
+
+// db.execute("SELECT * FROM student")
+//   .then((result) => {
+//     console.log(result);
+//   })
+//   .then((error) => {
+//     console.log(error);
+//   });
+
+// Test database connection
+db.authenticate()
+  .then(() => {
+    console.log("Database connected successfully.");
+  })
+  .catch((error) => {
+    console.error("Unable to connect to the database:", error);
+  });
+
+// Execute a raw SQL query using Sequelize
+db.query("SELECT * FROM students", { type: db.QueryTypes.SELECT })
+  .then((students) => {
+    console.log("Query result:", students);
+  })
+  .catch((error) => {
+    console.error("Query error:", error);
+  });
 
 const server = express();
 
 let port = 8000;
-
-// const server = http.createServer((request, response) => {
-//   response.write(`<h1>This is ${name} first server in Node JS</h1>`);
-//   response.end();
-// });
-
-// server.get("/", (request, response) => {
-//   response.send(`<h1>This is ${name} first server in Express JS Haha</h1>`);
-// });
-
-// server.get("/about", (request, response) => {
-//   response.send(
-//     `<h1>This is ${name} first server in Express JS and this about page</h1>`
-//   );
-// });
 
 // body parser middleware
 server.use(express.json());

@@ -32,10 +32,26 @@ router.get("/student/:id", (request, response) => {
 
 // adding new student to the students arrray
 router.post("/create-student/", (request, response) => {
-  const student = request.body;
-  console.log(student);
-  students.push(student);
-  response.json(student);
+  const newStudent = request.body; // Get the new student data from the request body
+  console.log(newStudent);
+
+  // Check if the ID already exists
+  const existingStudent = students.find(
+    (student) => student.id === newStudent.id
+  );
+
+  if (existingStudent) {
+    // Respond with an error if the ID already exists
+    return response
+      .status(400)
+      .json({ message: `Student with id ${newStudent.id} already exists` });
+  }
+
+  // Add the new student to the array
+  students.push(newStudent);
+
+  // Respond with the newly created student
+  response.status(201).json(newStudent);
 });
 
 module.exports = router;
