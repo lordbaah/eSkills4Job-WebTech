@@ -2,15 +2,29 @@ const express = require("express");
 
 const router = express.Router();
 
+// importing controllers
+const StudentController = require("../controllers/studentController");
+
+// get all students
+router.get("/students", StudentController.getAllStudents);
+
+// get student by
+router.get("/student/:id", StudentController.getStudentById);
+
+// add a student
+router.post("/create-student/", StudentController.createStudent);
+
+// update students records
+router.put("/student/:id", StudentController.updateStudent);
+
+module.exports = router;
+
 // let students = [
 //   { id: 1, name: "john doe1", dob: "200-1-10", email: "john1@gmail.com" },
 //   { id: 2, name: "john doe2", dob: "200-2-10", email: "john2@gmail.com" },
 //   { id: 3, name: "john doe3", dob: "200-3-10", email: "john3@gmail.com" },
 //   { id: 4, name: "john doe4", dob: "200-4-10", email: "john4@gmail.com" },
 // ];
-
-// importing controllers
-const StudentController = require("../controllers/studentController");
 
 // get all students in the database
 // router.get("/students", (request, response) => {
@@ -56,8 +70,3 @@ const StudentController = require("../controllers/studentController");
 //   // Respond with the newly created student
 //   response.status(201).json(newStudent);
 // });
-
-// create new student
-router.post("/create-student/", StudentController.createStudent);
-
-module.exports = router;
