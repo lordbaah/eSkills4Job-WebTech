@@ -17,4 +17,7 @@ router.get("/class/:id", ClassController.getClassById);
 // update class details
 router.put("/class/:id", ClassController.updateClass);
 
+// deleting class
+router.delete("/class/:id", ClassController.deleteClass);
+
 module.exports = router;

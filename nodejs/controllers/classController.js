@@ -88,27 +88,27 @@ class ClassController {
   }
 
   // Delete a class
-  //   static async deleteClass(request, res) {
-  //     const { id } = req.params;
+  static async deleteClass(request, response) {
+    const classId = parseInt(request.params.id);
 
-  //     try {
-  //       const classItem = await Class.findByPk(id);
+    try {
+      const classItem = await Class.findByPk(classId);
 
-  //       if (!classItem) {
-  //         return res
-  //           .status(404)
-  //           .json({ message: `Class with ID ${id} not found.` });
-  //       }
+      if (!classItem) {
+        response
+          .status(404)
+          .json({ message: `Class with ID ${id} not found.` });
+      } else {
+        // Delete the class
+        await classItem.destroy();
 
-  //       // Delete the class
-  //       await classItem.destroy();
-
-  //       return res.status(200).json({ message: "Class deleted successfully." });
-  //     } catch (error) {
-  //       console.error("Error deleting class:", error);
-  //       return res.status(500).json({ message: "Internal server error." });
-  //     }
-  //   }
+        response.status(200).json({ message: "Class deleted successfully." });
+      }
+    } catch (error) {
+      console.error("Error deleting class:", error);
+      return response.status(500).json({ message: "Internal server error." });
+    }
+  }
 }
 
 module.exports = ClassController;

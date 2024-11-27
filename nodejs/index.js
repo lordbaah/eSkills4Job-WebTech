@@ -24,14 +24,7 @@ sequelize
   // .sync({ alter: true }) // Alters the table to match the new model
   .then(() => {
     console.log("Tables recreated successfully.");
-    // return Student.create({
-    //   studentName: "John Doe",
-    //   dob: "2000-01-01",
-    // });
   })
-  // .then((student) => {
-  //   console.log("Sample student created:", student);
-  // })
   .catch((error) => {
     console.error("Error:", error);
   });
