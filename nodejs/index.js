@@ -4,6 +4,7 @@ const express = require("express");
 
 // accssing routes from studentsRoutes.js
 const studentsRoutes = require("./routes/studentsRoutes");
+const classRoutes = require("./routes/classRoutes");
 const db = require("./database");
 
 const sequelize = require("./database");
@@ -13,6 +14,8 @@ const Student = require("./models/students");
 const Department = require("./models/department");
 const Course = require("./models/courses");
 const Enrollment = require("./models/enrollment");
+const Class = require("./models/classes");
+const Instructor = require("./models/instructor");
 
 // creating database with sequilize
 sequelize
@@ -39,6 +42,8 @@ const models = {
   Course,
   Department,
   Enrollment,
+  Class,
+  Instructor,
 };
 
 Object.keys(models).forEach((modelName) => {
@@ -57,7 +62,8 @@ let port = 8000;
 server.use(express.json());
 server.use(express.urlencoded({ extended: false }));
 
-server.use("/api/v1", studentsRoutes);
+server.use("/api/v1", studentsRoutes, classRoutes);
+// server.use("/api/v1", classRoutes);
 
 server.listen(port, () => {
   console.log(`Server is listening on port ${port}`);

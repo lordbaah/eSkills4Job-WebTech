@@ -1,4 +1,3 @@
-const { response } = require("express");
 const Students = require("../models/students");
 
 class StudentController {
@@ -9,9 +8,7 @@ class StudentController {
 
       // validate all fields
       if (firstName === "" && lastName === "" && dob === "" && email === "") {
-        return response
-          .status(400)
-          .json({ message: "All fields are required" });
+        response.status(400).json({ message: "All fields are required" });
       }
 
       // Create new student

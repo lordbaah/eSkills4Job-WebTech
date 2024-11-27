@@ -1,23 +1,30 @@
 const Sequelize = require("sequelize");
-
-// import db = database connection
 const db = require("../database");
 
-const course = db.define("courses", {
-  course_id: {
+const Instructor = db.define("instructors", {
+  id: {
     type: Sequelize.INTEGER,
     autoIncrement: true,
     primaryKey: true,
     allowNull: false,
   },
-  courseName: {
+  firstName: {
     type: Sequelize.STRING,
     allowNull: false,
   },
-  courseDescription: {
+  lastName: {
     type: Sequelize.STRING,
     allowNull: false,
+  },
+  department: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+  email: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    unique: true,
   },
 });
 
-module.exports = course;
+module.exports = Instructor;
