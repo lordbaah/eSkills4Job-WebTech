@@ -8,6 +8,10 @@ const Class = db.define("classes", {
     primaryKey: true,
     allowNull: false,
   },
+  className: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
   semester: {
     type: Sequelize.STRING,
     allowNull: false,

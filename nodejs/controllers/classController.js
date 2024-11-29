@@ -4,23 +4,24 @@ class ClassController {
   // Create a new class
   static async createClass(request, response) {
     try {
-      const { semester, schedule } = request.body;
+      const { className, semester, schedule } = request.body;
 
       // Validate input fields
-      if (semester === "" && schedule === "") {
+      if (className === "" && semester === "" && schedule === "") {
         response.status(400).json({ message: "All fields are required." });
+      } else {
+        // Create a new class
+        const newClass = await Class.create({
+          className,
+          semester,
+          schedule,
+        });
+
+        response.status(201).json({
+          message: "Class created successfully.",
+          class: newClass,
+        });
       }
-
-      // Create a new class
-      const newClass = await Class.create({
-        semester,
-        schedule,
-      });
-
-      response.status(201).json({
-        message: "Class created successfully.",
-        class: newClass,
-      });
     } catch (error) {
       console.error("Error creating class:", error);
       return response.status(500).json({ message: "Internal server error." });
@@ -61,7 +62,7 @@ class ClassController {
   // Update a class
   static async updateClass(request, response) {
     const classId = parseInt(request.params.id);
-    const { semester, schedule } = request.body;
+    const { className, semester, schedule } = request.body;
 
     try {
       const classItem = await Class.findByPk(classId);
@@ -72,7 +73,8 @@ class ClassController {
           .json({ message: `Class with ID ${id} not found.` });
       } else {
         // update class details
-        (classItem.semester = semester),
+        (classItem.className = className),
+          (classItem.semester = semester),
           (classItem.schedule = schedule),
           await classItem.save();
 
